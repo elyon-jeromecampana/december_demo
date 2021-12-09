@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bir_module_landed_cost_vendors,bir_module.landed_cost_vendors,model_bir_module_landed_cost_vendors,base.group_user,1,1,1,1
+access_bir_module_atc_setup,bir_module.atc_setup,model_bir_module_atc_setup,base.group_user,1,1,1,1

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+    <t t-name="sawt_report">
+        <div class="col-md-12">
+        	<h2 style="color:#8f8f8f; padding-top:10px">Summary Alphalist of Withholding Tax</h2>
+        	<div class="row">
+	        	<div class="col-md-2">
+	        		<input type="button" id="export_sawt" value="Export xlsx" class="btn btn-success"/>
+	        	</div>
+	        	<div class="col-md-2">
+	                <input type="month" id="sawt_param" class="sawt_param"/>
+	        	</div>
+        	</div>
+        	<div id="sawt_table" class="sawt_table"></div>
+        </div>
+    </t>
+
+    <t t-name="map_report">
+        <div class="col-md-12">
+        	<h2 style="color:#8f8f8f; padding-top:10px">Monthly Alphalist of Payees</h2>
+        	<div class="row">
+        		<div class="col-md-2">
+	        		<input type="button" id="export_map" value="Export xlsx" class="btn btn-success"/>
+	        	</div>
+	        	<div class="col-md-2">
+	                <input type="month" id="map_param" class="map_param"/>
+	        	</div>
+        	</div>
+        	<div id="map_table" class="map_table"></div>
+        </div>
+    </t>
+
+    <t t-name="form_2307_page">
+        <div class="col-md-12">
+            <h2 style="color:#8f8f8f; padding-top:10px">BIR Form 2307</h2>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="button" id="print_2307" value="Print" class="btn btn-success"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="month" id="_2307_month" class="_2307_month"/>
+                </div>
+                <div class="col-md-1 form-group">
+                    <select class="form-control" id="_2307_partner">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="form_2550M_page">
+        <div class="col-md-12">
+            <h2 style="color:#8f8f8f; padding-top:10px">BIR Form 2550M</h2>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="button" id="print_2550M" value="Print" class="btn btn-success"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="month" id="_2550M_month" class="_2307_month"/>
+                </div>
+                <div class="col-md-1 form-group">
+                    <select class="form-control" id="_2550M_partner">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="form_2550Q_page">
+        <div class="col-md-12">
+            <h2 style="color:#8f8f8f; padding-top:10px">BIR Form 2550Q</h2>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="button" id="print_2550Q" value="Print" class="btn btn-success"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="month" id="_2550Q_month" class="_2307_month"/>
+                </div>
+                <div class="col-md-1 form-group">
+                    <select class="form-control" id="_2550Q_partner">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="sls_report">
+        <div class="col-md-12">
+            <h2 style="color:#8f8f8f; padding-top:10px">Summary List of Sales</h2>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="button" id="export_sls" value="Export xlsx" class="btn btn-success"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="month" id="sls_param" class="sls_param"/>
+                </div>
+            </div>
+            <div id="sls_table" class="sls_table"></div>
+        </div>
+    </t>
+
+    <t t-name="slp_report">
+        <div class="col-md-12">
+            <h2 style="color:#8f8f8f; padding-top:10px">Summary List of Purchases</h2>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="button" id="export_slp" value="Export xlsx" class="btn btn-success"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="month" id="slp_param" class="slp_param"/>
+                </div>
+            </div>
+            <div id="slp_table" class="slp_table"></div>
+        </div>
+    </t>
+</templates>
