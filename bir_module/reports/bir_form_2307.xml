@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding='utf-8'?>
+<odoo>
+
+	<!-- <report ### V13 Deprecated 
+		id="bir_form_2307"
+		string="BIR Form 2307"
+		model="account.move"
+		report_type="qweb-pdf"
+		name="bir_module.form_2307"
+		file="bir_module.form_2307"/> -->
+	<record id="2307_report_action_id_multi" model="ir.actions.report">
+		<field name="name">BIR Form 2307 multi</field>
+		<field name="model">account.move</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">bir_module.form_2307</field>
+		<field name="report_file">bir_module.form_2307</field>
+		<!-- <field name="binding_model_id" ref="account.model_account_move"/> -->
+		<field name="binding_type">report</field>
+	</record>
+
+	<template id="form_2307">
+		<t t-call='web.basic_layout'>
+
+			<t t-esc="id"/>
+			<t t-esc="month"/>
+
+			<t t-set="values" t-value="env['account.move'].x_get_2307_data([[id, month], 'not_transactional'])"/>
+			<t t-esc="values"/>
+		</t>
+	</template>
+
+</odoo>

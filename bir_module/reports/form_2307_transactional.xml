@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding='utf-8'?>
+<odoo>
+
+	<!-- <report ### V13 Deprecated 
+		id="bir_form_2307"
+		string="BIR Form 2307"
+		model="account.move"
+		report_type="qweb-pdf"
+		name="bir_module.form_2307"
+		file="bir_module.form_2307"/> -->
+	<record id="2307_report_action_id" model="ir.actions.report">
+		<field name="name">BIR Form 2307</field>
+		<field name="model">account.move</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">bir_module.form_2307_transactional</field>
+		<field name="report_file">bir_module.form_2307_transactional</field>
+		<field name="binding_model_id" ref="account.model_account_move"/>
+		<field name="binding_type">report</field>
+	</record>
+
+	<template id="form_2307_transactional">
+		<t t-call='web.basic_layout'>
+
+			<t t-set="values"/>
+			<t t-set="payor"/>
+
+			<t t-foreach="docs" t-as="doc">
+				<div class="page">
+					<p style="page-break-before:always;"> </p>
+					<p>-</p>
+
+					<t t-set='company' t-value="request.env['res.company'].search([('id', '=', doc.company_id.id)])"/>
+					<t t-set='payor' t-value="request.env['res.partner'].search([('id', '=', company.partner_id.id)])"/>
+					<t t-set='payee' t-value="request.env['res.partner'].search([('id', '=', doc.partner_id.id)])"/>
+					<t t-set="values" t-value="env['account.move'].x_get_2307_data([doc.id,'transactional'])"/>
+
+					<div class="jumbotron jumbotron-fluid" style="background-image: url('/bir_module/static/img/2307.jpg');  background-repeat: no-repeat; background-size: 290mm 480mm; width:290mm; height:480mm;position: absolute;">
+						<!--upper container-->
+						<div class="container" style="position: relative;text-align: left; color: black; top:90px; width:100%;">
+						<!-- <div class="container" style="text-align: left; color: black; top:90px; width:100%;"> -->
+
+							<div class="left" style="position: absolute; top:18px; left:150px;letter-spacing:8px; font-size:21px; width:300px;"><t t-esc="doc.invoice_date.strftime('%m %d %y')"/></div>
+							<div class="right" style="position: absolute; top:18px; left:580px;letter-spacing:8px; font-size:21px; width:300px;"><t t-esc="doc.date.strftime('%m %d %y')"/></div>
+
+							<div class="left" style="position: absolute; top:91px; left:181px; letter-spacing:11px; font-size:23px;width:600px;"><t t-esc="payee.vat"/>-000</div>
+							<div class="left" style="position: absolute;top:137px;left:191px;"><t t-esc="payee.name"/></div>
+							<div class="left" style="position: absolute; top:190px; left:190px;"><small><t t-esc="payee.street + ', ' + payee.city"/></small></div>
+							<div class="right" style="position: absolute; top:195px; left: 977px; letter-spacing: 13px; font-size: 21px" ><t t-esc="payee.zip"/></div>
+
+
+							<div class="left" style="position: absolute; top:300px; left:182px; letter-spacing:11px; font-size:23px;width:600px;"><t t-esc="payor.vat"/>-000</div>
+							<div class="left" style="position: absolute; top:348px; left:191px;"><t t-esc="payor.name"/></div>
+							<div class="left" style="position: absolute; top:400px; left:190px;"><small><t t-esc="payor.street + ', ' + payor.city"/></small></div>
+							<div class="right" style="position: absolute; top:400px; left: 976px; letter-spacing: 13px; font-size: 21px" ><t t-esc="payor.zip"/></div>
+								
+						</div>
+
+						<t t-set="quarter" t-value="env['account.move'].get_bir_quarter(doc.date)"/>
+						<div class="container" style="padding-top:170mm;font-size:15px;padding-left:50px;width:100%; position: absolute;">
+							<t t-foreach="values[0]" t-as="val">
+								<div class="row">
+									<t t-set="qrtr1" t-value="'0'"/>
+									<t t-set="qrtr2" t-value="'0'"/>
+									<t t-set="qrtr3" t-value="'0'"/>
+									<t t-if="quarter == '1'">
+										<t t-set="qrtr1" t-value="val[1]"/>
+									</t>
+									<t t-if="quarter == '2'">
+										<t t-set="qrtr2" t-value="val[1]"/>
+									</t>
+									<t t-if="quarter == '3'">
+										<t t-set="qrtr3" t-value="val[1]"/>
+									</t>
+
+									<div style="width:200px;text-align:center;"><t t-esc='val[5]'/></div>
+
+									<div style="width:50mm;text-align:center;"><t t-esc='val[4]'/></div>
+
+									<div style="width:32.5mm;text-align:center;"><t t-esc='qrtr1'/></div>
+									<div style="width:32.5mm;text-align:center;"><t t-esc='qrtr2'/></div>
+									<div style="width:32.5mm;text-align:center;"><t t-esc='qrtr3'/></div>
+									<div style="width:32.5mm;text-align:center;"><t t-esc='float(qrtr1) + float(qrtr2) + float(qrtr3)'/></div>
+
+									<div style="width:50mm;text-align:center;"><t t-esc='val[0]'/></div>
+
+								</div>
+							</t>
+						</div>
+					</div>
+				</div>
+			</t>
+			<t t-if="len(values[1]) > 0">
+				<t t-foreach="values[1]" t-as="vals">
+					<div class="page">
+						<p style="page-break-before:always;"> </p>
+						<p>-</p>
+						<!-- <t t-esc="vals"/> -->
+						<div class="jumbotron jumbotron-fluid" style="background-image: url('/bir_module/static/img/2307.jpg');  background-repeat: no-repeat; background-size: 290mm 480mm; width:290mm; height:480mm;position: absolute;">
+						<!--upper container-->
+							<div class="container" style="position: relative;text-align: left; color: black; top:90px; width:100%;">
+							<!-- <div class="container" style="text-align: left; color: black; top:90px; width:100%;"> -->
+
+								<div class="left" style="position: absolute; top:18px; left:150px;letter-spacing:8px; font-size:21px; width:300px;"><t t-esc="doc.invoice_date.strftime('%m %d %y')"/></div>
+								<div class="right" style="position: absolute; top:18px; left:580px;letter-spacing:8px; font-size:21px; width:300px;"><t t-esc="doc.date.strftime('%m %d %y')"/></div>
+
+								<div class="left" style="position: absolute; top:91px; left:181px; letter-spacing:11px; font-size:23px;width:600px;"><t t-esc="vals[3]"/>-000</div>
+								<div class="left" style="position: absolute;top:137px;left:191px;"><t t-esc="vals[2]"/></div>
+								<t t-if="vals[4] != None">
+									<div class="left" style="position: absolute; top:190px; left:190px;"><small><t t-esc="vals[4] + ', ' + vals[5]"/></small></div>
+								</t>
+								<div class="right" style="position: absolute; top:195px; left: 977px; letter-spacing: 13px; font-size: 21px" ><t t-esc="vals[6]"/></div>
+
+
+								<div class="left" style="position: absolute; top:300px; left:182px; letter-spacing:11px; font-size:23px;width:600px;"><t t-esc="payor.vat"/>-000</div>
+								<div class="left" style="position: absolute; top:348px; left:191px;"><t t-esc="payor.name"/></div>
+								<div class="left" style="position: absolute; top:400px; left:190px;"><small><t t-esc="payor.street + ', ' + payor.city"/></small></div>
+								<div class="right" style="position: absolute; top:400px; left: 976px; letter-spacing: 13px; font-size: 21px" ><t t-esc="payor.zip"/></div>
+									
+							</div>
+
+							<t t-set="quarter" t-value="env['account.move'].get_bir_quarter(doc.date)"/>
+							<div class="container" style="padding-top:170mm;font-size:15px;padding-left:50px;width:100%; position: absolute;">
+									<div class="row">
+										<t t-set="qrtr1" t-value="'0'"/>
+										<t t-set="qrtr2" t-value="'0'"/>
+										<t t-set="qrtr3" t-value="'0'"/>
+										<t t-if="quarter == '1'">
+											<t t-set="qrtr1" t-value="vals[1]"/>
+										</t>
+										<t t-if="quarter == '2'">
+											<t t-set="qrtr2" t-value="vals[1]"/>
+										</t>
+										<t t-if="quarter == '3'">
+											<t t-set="qrtr3" t-value="vals[1]"/>
+										</t>
+
+										<div style="width:200px;text-align:center;"><t t-esc='vals[8]'/></div>
+
+										<div style="width:50mm;text-align:center;"><t t-esc='vals[7]'/></div>
+
+										<div style="width:32.5mm;text-align:center;"><t t-esc='qrtr1'/></div>
+										<div style="width:32.5mm;text-align:center;"><t t-esc='qrtr2'/></div>
+										<div style="width:32.5mm;text-align:center;"><t t-esc='qrtr3'/></div>
+										<div style="width:32.5mm;text-align:center;"><t t-esc='float(qrtr1) + float(qrtr2) + float(qrtr3)'/></div>
+
+										<div style="width:50mm;text-align:center;"><t t-esc='val[0]'/></div>
+
+									</div>
+							</div>
+						</div>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+
+</odoo>
